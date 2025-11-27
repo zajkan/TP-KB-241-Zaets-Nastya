@@ -1,10 +1,10 @@
 def sum(a, b):
     return a + b
-def subtract(a, b):
+def subt(a, b):
     return a - b
-def multiply(a, b):
+def multi(a, b):
     return a * b
-def divide(a, b):
+def div(a, b):
     if b == 0:
         return "Помилка: ділення на нуль!"
     else:
@@ -18,10 +18,10 @@ b = float(input("Введіть друге число: "))
 if oper == '+':
     print("Результат:", sum(a, b))
 elif oper == '-':
-    print("Результат:", subtract(a, b))
+    print("Результат:", subt(a, b))
 elif oper == '*':
-    print("Результат:", multiply(a, b))
+    print("Результат:", multi(a, b))
 elif oper == '/':
-    print("Результат:", divide(a, b))
+    print("Результат:", div(a, b))
 else:
     print("Невідома операція!")
