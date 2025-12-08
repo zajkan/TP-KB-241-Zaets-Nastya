@@ -58,7 +58,7 @@ def calculator():
         except Exception as e:
             print(f"Невідома помилка: {e}")
             
-            if name == "__main__": calculator()
+            if __name__ == "__main__": calculator()
 
 
 if __name__ == "__main__":
