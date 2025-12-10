@@ -9,7 +9,7 @@ class MathOper:
         return a * b
     
     def div(self, a, b):
-        if b != 0:
-            return a / b
-        else:
-            raise ValueError ("Помилка ділення на 0 неможливе!")
+        try:
+             return a / b
+        except ZeroDivisionError:
+            return ("Помилка ділення на 0 неможливе!")
