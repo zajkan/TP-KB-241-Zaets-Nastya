@@ -1,15 +1,28 @@
-list = [
-    {"name":"Bob","surname":"Ross", "phone":"0631234567", "email":"student1@gmail.com"},
-    {"name":"Emma","surname":"Watson", "phone":"0631234567", "email":"student2@gmail.com"},
-    {"name":"Jon","surname":"Snow",  "phone":"0631234567", "email":"student3@gmail.com"},
-    {"name":"Zak","surname":"Brown",  "phone":"0631234567", "email":"student4@gmail.com"}
-]
+from sys import argv 
+import csv
 
-def printAllList():
-    for elem in list:
-        strForPrint = "Student is " + elem["name"] + ' ' +  elem["surname"] + ",  Phone is " + elem["phone"] + ",  email is " + elem["email"]
-        print(strForPrint)
-    return
+list = []
+
+def loadCSV():
+    global filename
+    filename = "lab2.csv"
+    if len(argv) > 1:
+        filename = argv[1]
+
+    try:
+        with open(filename, "r") as file:
+            reader = csv.DictReader(file, skipinitialspace=True)
+            for row in reader:
+                list.append({
+                    "name": row["StudentName"],
+                    "surname": row["StudentSurname"],
+                    "phone": row["StudentPhone"],
+                    "email": row["StudentEmail"]
+                })
+    except FileNotFoundError:
+        print("Файл не знайдено, починаємо з порожнім списком.")
+    except KeyError as e:
+        print(f"Помилка структури CSV: {e}")
 
 def addNewElement():
     name = input("Pease enter student name: ")
@@ -41,7 +54,6 @@ def deleteElement():
         print("Delete position " + str(deletePosition))
         del list[deletePosition]
     return
-
 
 def updateElement():
    name = input("Please enter name to be updated: ")
@@ -77,11 +89,28 @@ def updateElement():
    print("Student has been updated")
    return
 
+def saveList():
+    with open(filename, "w") as file:
+        fieldnames = ["StudentName", "StudentSurname", "StudentPhone", "StudentEmail"]
+        writer = csv.DictWriter(file, fieldnames=fieldnames)
+        writer.writeheader()
+        
+        for student in list:
+            writer.writerow({
+               "StudentName": student['name'],
+               "StudentSurname": student['surname'],
+               "StudentPhone": student['phone'],
+				   "StudentEmail": student['email'],
+				})
+    print(f"Дані збережено в {filename}")
 
-
-
+def printAllList():
+    for student in list:
+        print(f"{student['name']} {student['surname']} | {student['phone']} | {student['email']}")      
 
 def main():
+    loadCSV()
+    
     while True:
         chouse = input("Please specify the action [ C create, U update, D delete, P print,  X exit ] ")
         match chouse:
@@ -102,9 +131,10 @@ def main():
                 printAllList()
             case "X" | "x":
                 print("Exit()")
+                saveList()
                 break
             case _:
                 print("Wrong chouse")
 
-
-main()
+if __name__ == "__main__":
+    main()
