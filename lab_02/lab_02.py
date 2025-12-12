@@ -25,10 +25,10 @@ def loadCSV():
         print(f"Помилка структури CSV: {e}")
 
 def addNewElement():
-    name = input("Pease enter student name: ")
-    surname = input("Pease enter student surname: ")
-    phone = input("Please enter student phone: ")
-    email = input("Please enter student email: ")
+    name = input("Будь ласка, введіть ім'я студента: ")
+    surname = input("Будь ласка, введіть прізвище студента: ")
+    phone = input("Будь ласка, введіть номер телефону студента: ")
+    email = input("Будь ласка, введіть email студента: ")
     newItem = {"name": name, "surname": surname, "phone": phone, "email":email}
 
     insertPosition = 0
@@ -38,25 +38,25 @@ def addNewElement():
         else:
             break
     list.insert(insertPosition, newItem)
-    print("New element has been added")
+    print("Новий студент був додан")
     return
 
 def deleteElement():
-    name = input("Please enter name to be delated: ")
+    name = input("Будь ласка, введіть ім'я студента для видалення: ")
     deletePosition = -1
     for item in list:
         if name == item["name"]:
             deletePosition = list.index(item)
             break
     if deletePosition == -1:
-        print("Element was not found")
+        print("Студент не був знайден")
     else:
-        print("Delete position " + str(deletePosition))
+        print("Видалення " + str(deletePosition))
         del list[deletePosition]
     return
 
 def updateElement():
-   name = input("Please enter name to be updated: ")
+   name = input("Будь ласка, введіть ім'я студента для оновлення: ")
    found = None
    for item in list:
       if item["name"] == name:
@@ -64,15 +64,15 @@ def updateElement():
             break
 
    if not found:
-        print("Student not found")
+        print("Студент не був знайден")
         return
 
-   print(f"Updating student: {found['name']} {found['surname']}")
+   print(f"Оновлення студента: {found['name']} {found['surname']}")
 
-   new_name = input(f"Enter new name [{found['name']}]: ") or found['name']
-   new_surname = input(f"Enter new surname [{found['surname']}]: ") or found['surname']
-   new_phone = input(f"Enter new phone [{found['phone']}]: ") or found['phone']
-   new_email = input(f"Enter new email [{found['email']}]: ") or found['email']
+   new_name = input(f"Введіть нове ім'я [{found['name']}]: ") or found['name']
+   new_surname = input(f"Введіть нове прізвище [{found['surname']}]: ") or found['surname']
+   new_phone = input(f"Введіть новий номер телефону [{found['phone']}]: ") or found['phone']
+   new_email = input(f"Введіть нову email [{found['email']}]: ") or found['email']
     
    list.remove(found)
 
@@ -86,7 +86,7 @@ def updateElement():
             break
    list.insert(insertPosition, updatedItem)
 
-   print("Student has been updated")
+   print("Студент був оновленний")
    return
 
 def saveList():
@@ -112,29 +112,29 @@ def main():
     loadCSV()
     
     while True:
-        chouse = input("Please specify the action [ C create, U update, D delete, P print,  X exit ] ")
+        chouse = input("\nБудь ласка, оберіть дію [ C створення, U оновлення, D видалення, P показати список,  X Вихід ] ")
         match chouse:
             case "C" | "c":
-                print("New element will be created:")
+                print("Новий студент буде додано:")
                 addNewElement()
                 printAllList()
             case "U" | "u":
-                print("Existing element will be updated")
+                print("Дані студента будуть оновленно")
                 updateElement()
                 printAllList()
             case "D" | "d":
-                print("Element will be deleted")
+                print("Студента буде видалено")
                 deleteElement()
                 printAllList()
             case "P" | "p":
-                print("List will be printed")
+                print("Список студентів буде надруковано")
                 printAllList()
             case "X" | "x":
-                print("Exit()")
+                print("Вихід")
                 saveList()
                 break
             case _:
-                print("Wrong chouse")
+                print("Невідома дія")
 
 if __name__ == "__main__":
     main()
